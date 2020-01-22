@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Animated tour example</title>
+    <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation-timeline-component@2.0.0/dist/aframe-animation-timeline-component.min.js"></script>
+    <script>
+        AFRAME.registerComponent("enter-vr", {
+            init: function() {
+                document.querySelector('a-scene').addEventListener('enter-vr', function () {
+                    console.log("ENTERED VR");
+                    const el = document.querySelector("#cursor");
+                    el.setAttribute("visible", false);
+                });
+            }
+        });
+
+        AFRAME.registerComponent('sphere-on-click',{
+            init: function() {
+                const view = document.getElementById("scene");
+                this.el.addEventListener('click', function() {
+                    console.log("clicked!", "startAnimation");
+                    view.emit("startAnimation");
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+<a-scene id="scene" background="color: #FAFAFA" environment="preset: contact" enter-vr
+         animation-timeline__1="timeline: #myTimeline; loop:false; startEvents: startAnimation">
+    <a-assets>
+        <a-timeline id="myTimeline">
+            <a-timeline-group>
+                <a-timeline-animation select="#rig" name="1rotate"></a-timeline-animation>
+                <a-timeline-animation select="#rig" name="1move"></a-timeline-animation>
+            </a-timeline-group>
+            <a-timeline-group>
+                <a-timeline-animation select="#rig" name="2rotate"></a-timeline-animation>
+                <a-timeline-animation select="#rig" name="2move"></a-timeline-animation>
+            </a-timeline-group>
+        </a-timeline>
+    </a-assets>
+
+    <a-entity id="text_welcome" scale="2 2 1" rotation="0 0 0" position="25.5 1.7 -3" text="value: Click the sphere!;"></a-entity>
+
+    <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: #box"></a-entity>
+    <a-box id="box" scale="1 3.63 1" position="-2.47631 2.18735 0.4971" rotation="0 45 0" material="color: #800040" geometry=""></a-box>
+    <a-sphere id="sphere" scale="10 10 10" position="0.04869 12.70203 -32.54918" radius="1.25" color="#EF2D5E"
+              material="" geometry="" sphere-on-click></a-sphere>
+    <a-cylinder id="cylinder1" position="4.0857 0.75 -5.58368" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+    <a-cylinder id="cylinder2" position="-1.86514 0.75 -5.59798" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+    <a-cylinder id="cylinder3" position="4 0.75 -7.67455" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+    <a-cylinder id="cylinder4" position="-2.0455 0.75 -10.30066" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+    <a-cylinder id="cylinder5" position="4 0.75 -10.30927" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+    <a-cylinder id="cylinder3-2" position="1.31441 0.83598 7.60063" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+    <a-cylinder id="cylinder3-3" position="-1.91616 0.75 -7.52348" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+
+    <a-entity id="rig" position="25 1.6 0" rotation="0 0 0"
+              animation__1rotate="property: rotation; from: 0  0; to: 0  90; dur: 3000; easing: linear; autoplay: false"
+              animation__2rotate="property: rotation; from: 0 90; to: 0   0; dur: 2000; easing: linear; autoplay: false"
+              animation__1move="property: position; from: 25 1.6 0; to: 1 1.6  0; dur: 10000; easing: easeInExpo; autoplay: false"
+              animation__2move="property: position; from:  1 1.6 0; to: 1 1.6 -10; dur: 10000; easing: linear; autoplay: false">
+
+        <a-entity id="player" camera look-controls wasd-controls>
+            <a-entity id="cursor" cursor="fuse: false;" cursor-check
+                      position="0 0 -1"
+                      geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                      material="color: black; shader: flat">
+            </a-entity>
+
+        </a-entity>
+        <a-box id="platform" scale="4 0.2 4" position="0 -1.38984 0" rotation="0 0 0"
+               material="color: #583a27" geometry=""></a-box>
+        <a-entity laser-controls="hand: right"></a-entity>
+    </a-entity>
+</a-scene>
+</body>
+</html>

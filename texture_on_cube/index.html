@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Textured Cube</title>
+    <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+</head>
+<body>
+<a-scene id="scene" background="color: #FAFAFA" environment="preset: checkerboard; seed: 42; ">
+    <a-assets>
+        <img id="cube-texture" src="2470.jpg">
+    </a-assets>
+
+    <a-entity id="light1" light="intensity: 0.5" position="0 1.2 0"></a-entity>
+    <a-entity id="light2" light="intensity: 0.5" position="-2 3 2"></a-entity>
+
+    <a-box id="box" scale="1 1 1" position="0 1 -3"
+           rotation="0 128 128"
+           material="src: #cube-texture">
+    </a-box>
+
+    <a-entity id="rig" position="0 1.6 0" rotation="0 0 0">
+        <a-entity id="player" camera look-controls wasd-controls>
+        </a-entity>
+    </a-entity>
+
+</a-scene>
+</body>
+</html>
